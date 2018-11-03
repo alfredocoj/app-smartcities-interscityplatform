@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+
+
+    <meta charset="utf-8">
+    <title>Custom Map Projections</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #coords {
+        background-color: black;
+        color: white;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="coords"></div>
+    <script>
+      // This example defines an image map type using the Gall-Peters
+      // projection.
+      // https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection
+
+      function initMap() {
+        // Create a map. Use the Gall-Peters map type.
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: {lat: 41.883811, lng: -87.631749},
+          mapTypeControl: false
+        });
+
+        //initGallPeters();
+        //map.mapTypes.set('gallPeters', gallPetersMapType);
+        //map.setMapTypeId('gallPeters');
+
+        // Show the lat and lng under the mouse cursor.
+        var coordsDiv = document.getElementById('coords');
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(coordsDiv);
+        map.addListener('mousemove', function(event) {
+          coordsDiv.textContent =
+              'lat: ' + Math.round(event.latLng.lat()) + ', ' +
+              'lng: ' + Math.round(event.latLng.lng());
+        });
+
+        // Add some markers to the map.
+        map.data.setStyle(function(feature) {
+          return {
+            title: feature.getProperty('name'),
+            optimized: false
+          };
+        });
+        //map.data.addGeoJson(cities);
+        // Retrieve our data and plot it
+        url = 'https://data.cityofchicago.org/resource/6zsd-86xi?$where=within_circle(location, 41.883811, -87.631749, 1000)';
+
+	    $.getJSON(url, function(data, textstatus) {
+	          $.each(data, function(i, entry) {
+
+	          	var houve_prisao = entry.arrest ? 'Sim' : 'Não';
+	          	
+          		var contentString = '<div id="content">'+
+	            '<div id="siteNotice">'+
+	            '</div>'+
+	            '<h1 id="firstHeading" class="firstHeading">'+ entry.location_description +'</h1>'+
+	            '<div id="bodyContent">'+
+	            '<p><b>Endereço:</b> ' + entry.block + '</p>'+
+	            '<p><b>Descrição:</b> '+ entry.description + '</p>'+
+	            '<p><b>Data do evento:</b> '+ entry.date + '</p>'+
+	            '<p><b>Houve prisão:</b> '+ houve_prisao + '</p>'+
+	            '<p><b>Ano:</b> '+ entry.year + '</p>'+
+	            
+	            '<p>Coordenadas:</p>'+
+	            '<p><b>Latitude:</b> '+ entry.location.coordinates[1] + '</p>'+
+	            '<p><b>Longitude:</b> '+ entry.location.coordinates[0] + '</p>'+ 
+	            '</div>'+
+	            '</div>';
+
+		      	var infowindow = new google.maps.InfoWindow({
+		         	content: contentString
+		        	});
+
+					var marker = new google.maps.Marker({
+						position: new google.maps.LatLng(entry.location.coordinates[1], 
+						                                 entry.location.coordinates[0]),
+						map: map,
+						title: location.name
+					});
+					marker.addListener('click', function() {
+						infowindow.open(map, marker);
+					});
+
+	          });
+	    });
+      }
+
+      
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuLvRcPR9MklYRhDLl2qEgjmlSBt_7_48&callback=initMap"></script>
+  </body>
+</html>
