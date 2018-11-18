@@ -1,164 +1,232 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  	<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<head>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous" defer></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+            integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"
+            defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"
+            defer></script>
 
     <meta charset="utf-8">
     <title>InterCrime</title>
     <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #coords {
-        background-color: black;
-        color: white;
-        padding: 5px;
-      }
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #coords {
+            background-color: black;
+            color: white;
+            padding: 5px;
+        }
     </style>
-  </head>
-  <body>
-    <nav class="navbar navbar-fixed-top navbar-inverse bg-inverse p-0">
-      <form class="form-inline mx-2">
-          <div class="btn-toolbar mr-auto" role="toolbar">
-              <div class="btn-group btn-group-sm mr-2" role="group">
-                  <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal"><i class="fa fa-bars fa-fw"></i></button>
-              </div>
-              <div class="input-group input-group-sm">
-                  <input type="text" class="form-control" style="border:1px solid #adadad;" placeholder="Endereço" aria-describedby="btnGroupAddon">
-                  <button class="btn btn-secondary input-group-addon"><i class="fa fa-search fa-fw"></i></button>
-              </div>
-          </div>
-          <ul class="navbar-nav">
-              <li class="nav-item dropdown">
-                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#accountmenu"><span class="hidden-sm-down mr-2">Login</span><i class="fa fa-user"></i></a>
-                  <div id="accountmenu" class="dropdown">
-                      <div class="dropdown-menu dropdown-menu-right p-0">
-                          <div class="card">
-                              <div class="card-header">
-                                  <ul class="nav nav-tabs card-header-tabs">
-                                      <li class="nav-item">
-                                          <a class="nav-link active" href="#">Active</a>
-                                      </li>
-                                      <li class="nav-item">
-                                          <a class="nav-link" href="#">Link</a>
-                                      </li>
-                                      <li class="nav-item">
-                                          <a class="nav-link disabled" href="#">Disabled</a>
-                                      </li>
-                                  </ul>
-                              </div>
-                              <div class="card-block">
-                                  <h4 class="card-title">Bem vindo!</h4>
-                                  <p class="card-text">Essa é a sua área de análise de crimes da Cidade de Chicago - EUA.</p>
-                                  <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </li>
-          </ul>
-      </form>
-    </nav>
-    <!-- Broken Nav -->
-    <!-- Modal Sidebar -->
-    <div class="modal left fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div id="SideMenu">
-                  <div class="card">
-                      <div class="card-header btn btn-default mh1" data-toggle="collapse" data-target="#MenuLayers" data-parent="#SideMenu">
-                          <i class="fa fa-map fa-fw"></i>&nbsp;Anos
-                      </div>
-                      <div id="MenuLayers" class="collapse show">
-                          <div class="card-block list-group mg1">
-                              <button id="ano1" type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;2018</button>
-                              <button id="ano2" type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;2017</button>
-                              <button id="ano3" type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;2016</button>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="card">
-                      <div class="card-header btn btn-default mh1" data-toggle="collapse" data-target="#MenuStuff" data-parent="#SideMenu">
-                          <i class="fa fa-bullseye fa-fw"></i>&nbsp;Relatórios
-                      </div>
-                      <div id="MenuStuff" class="collapse">
-                          <div class="card-block list-group mg1">
-                              <button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Quantitativos por ano</button>
-                              <button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Quantitativo por crimes</button>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="card">
-                      <div class="card-header btn btn-default mh1" data-toggle="collapse" data-target="#MenuTools" data-parent="#SideMenu">
-                          <i class="fa fa-wrench fa-fw"></i>&nbsp;Tools
-                      </div>
-                      <!--<div id="MenuTools" class="collapse">-->
-                          <!--<div class="card-block list-group mg1">-->
-                              <!--<button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Item</button>-->
-                              <!--<button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Item</button>-->
-                              <!--<button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Item</button>-->
-                          <!--</div>-->
-                      <!--</div>-->
-                  </div>
-                  <div class="card">
-                      <div class="card-header btn btn-default mh1" data-toggle="collapse" data-target="#MenuSettings" data-parent="#SideMenu">
-                          <i class="fa fa-cog fa-fw"></i>&nbsp;Settings
-                      </div>
-                      <!--<div id="MenuSettings" class="collapse">-->
-                          <!--<div class="card-block list-group mg1">-->
-                              <!--<button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Item</button>-->
-                              <!--<button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Item</button>-->
-                              <!--<button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Item</button>-->
-                          <!--</div>-->
-                      <!--</div>-->
-                  </div>
-              </div>
-          </div><!-- modal-content -->
-      </div><!-- modal-dialog -->
-    </div><!-- modal -->
-    <div id="map"></div>
-    <div id="coords"></div>
-    <script>
-      // This example defines an image map type using the Gall-Peters
-      // projection.
-      // https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection
+</head>
+<body>
+<nav class="navbar navbar-fixed-top navbar-inverse bg-inverse p-0">
+    <form class="form-inline mx-2">
+        <div class="btn-toolbar mr-auto" role="toolbar">
+            <div class="btn-group btn-group-sm mr-2" role="group">
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal"><i
+                        class="fa fa-bars fa-fw"></i></button>
+            </div>
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" style="border:1px solid #adadad;" placeholder="Endereço"
+                       aria-describedby="btnGroupAddon">
+                <button class="btn btn-secondary input-group-addon"><i class="fa fa-search fa-fw"></i></button>
+            </div>
+        </div>
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="#accountmenu"><span
+                        class="hidden-sm-down mr-2">Login</span><i class="fa fa-user"></i></a>
+                <div id="accountmenu" class="dropdown">
+                    <div class="dropdown-menu dropdown-menu-right p-0">
+                        <div class="card">
+                            <div class="card-header">
+                                <ul class="nav nav-tabs card-header-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#">Active</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Link</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled" href="#">Disabled</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-block">
+                                <h4 class="card-title">Bem vindo!</h4>
+                                <p class="card-text">Essa é a sua área de análise de crimes da Cidade de Chicago -
+                                    EUA.</p>
+                                <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </form>
+</nav>
+<!-- Broken Nav -->
+<!-- Modal Sidebar -->
+<div class="modal left fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="SideMenu">
+                <div class="card">
+                    <div class="card-header btn btn-default mh1" data-toggle="collapse" data-target="#MenuLayers"
+                         data-parent="#SideMenu">
+                        <i class="fa fa-map fa-fw"></i>&nbsp;Filtro por anos
+                    </div>
+                    <div id="MenuLayers" class="collapse show">
+                        <div class="card-block list-group mg1">
+                            <button id="ano1" type="button" class="list-group-item list-group-item-action"><i
+                                    class="fa fa-question fa-fw"></i>&nbsp;2018
+                            </button>
+                            <button id="ano2" type="button" class="list-group-item list-group-item-action"><i
+                                    class="fa fa-question fa-fw"></i>&nbsp;2017
+                            </button>
+                            <button id="ano3" type="button" class="list-group-item list-group-item-action"><i
+                                    class="fa fa-question fa-fw"></i>&nbsp;2016
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header btn btn-default mh1" data-toggle="collapse" data-target="#MenuCrimes"
+                         data-parent="#SideMenu">
+                        <i class="fa fa-map fa-fw"></i>&nbsp;Filtro por crimes
+                    </div>
+                    <div id="MenuCrimes" class="collapse show">
+                        <div class="card-block list-group mg1">
+                            <button id="crime1" type="button" class="list-group-item list-group-item-action"><i
+                                    class="fa fa-question fa-fw"></i>&nbsp;Homicídio
+                            </button>
+                            <button id="crime2" type="button" class="list-group-item list-group-item-action"><i
+                                    class="fa fa-question fa-fw"></i>&nbsp;Roubo
+                            </button>
+                            <button id="crime3" type="button" class="list-group-item list-group-item-action"><i
+                                    class="fa fa-question fa-fw"></i>&nbsp;Roubo de veículo
+                            </button>
+                            <button id="crime4" type="button" class="list-group-item list-group-item-action"><i
+                                    class="fa fa-question fa-fw"></i>&nbsp;Transgressão criminosa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header btn btn-default mh1" data-toggle="collapse" data-target="#MenuStuff"
+                         data-parent="#SideMenu">
+                        <i class="fa fa-bullseye fa-fw"></i>&nbsp;Relatórios
+                    </div>
+                    <div id="MenuStuff" class="collapse">
+                        <div class="card-block list-group mg1">
+                            <button type="button" class="list-group-item list-group-item-action"><i
+                                    class="fa fa-question fa-fw"></i>&nbsp;Quantitativos por ano
+                            </button>
+                            <button type="button" class="list-group-item list-group-item-action"><i
+                                    class="fa fa-question fa-fw"></i>&nbsp;Quantitativo por crimes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header btn btn-default mh1" data-toggle="collapse" data-target="#MenuTools"
+                         data-parent="#SideMenu">
+                        <i class="fa fa-wrench fa-fw"></i>&nbsp;Tools
+                    </div>
+                    <!--<div id="MenuTools" class="collapse">-->
+                    <!--<div class="card-block list-group mg1">-->
+                    <!--<button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Item</button>-->
+                    <!--<button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Item</button>-->
+                    <!--<button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Item</button>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+                <div class="card">
+                    <div class="card-header btn btn-default mh1" data-toggle="collapse" data-target="#MenuSettings"
+                         data-parent="#SideMenu">
+                        <i class="fa fa-cog fa-fw"></i>&nbsp;Settings
+                    </div>
+                    <!--<div id="MenuSettings" class="collapse">-->
+                    <!--<div class="card-block list-group mg1">-->
+                    <!--<button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Item</button>-->
+                    <!--<button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Item</button>-->
+                    <!--<button type="button" class="list-group-item list-group-item-action"><i class="fa fa-question fa-fw"></i>&nbsp;Item</button>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div><!-- modal -->
+<div id="map"></div>
+<div id="coords"></div>
+<script>
+    // This example defines an image map type using the Gall-Peters
+    // projection.
+    // https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection
 
-      var anoClicado = '';
+    var anoClicado = '';
+    var crimeClicado = '';
 
-      $('#ano1, #ano2, #ano3').click(function () {
+    $('#ano1, #ano2, #ano3').click(function () {
         if (this.id == 'ano1') {
-          anoClicado='2018';
+            anoClicado = '2018';
         }
         else if (this.id == 'ano2') {
-          anoClicado='2017';
+            anoClicado = '2017';
         }
         else if (this.id == 'ano3') {
-          anoClicado='2016';
+            anoClicado = '2016';
         }
         initMap();
-      });
+    });
 
-      function initMap() {
+    $('#crime1, #crime2, #crime3').click(function () {
+        if (this.id == 'crime1') {
+            crimeClicado = 'HOMICIDE';
+        }
+        else if (this.id == 'crime2') {
+            crimeClicado = 'THEFT';
+        }
+
+        else if (this.id == 'crime3') {
+            crimeClicado = 'MOTOR VEHICLE THEFT';
+        }
+
+        else if (this.id == 'crime4') {
+            crimeClicado = 'CRIMINAL TRESPASS';
+        }
+
+        initMap();
+    });
+
+    function initMap() {
         // Create a map. Use the Gall-Peters map type.
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
-          center: {lat: 41.883811, lng: -87.631749},
-          mapTypeControl: false
+            zoom: 15,
+            center: {lat: 41.883811, lng: -87.631749},
+            mapTypeControl: false
         });
 
         //initGallPeters();
@@ -168,70 +236,75 @@
         // Show the lat and lng under the mouse cursor.
         var coordsDiv = document.getElementById('coords');
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(coordsDiv);
-        map.addListener('mousemove', function(event) {
-          coordsDiv.textContent = '['+
-              'lat: ' + Math.round(event.latLng.lat()) + ', ' +
-              'lng: ' + Math.round(event.latLng.lng()) +']';
+        map.addListener('mousemove', function (event) {
+                coordsDiv.textContent = '[' +
+                    'lat: ' + Math.round(event.latLng.lat()) + ', ' +
+                    'lng: ' + Math.round(event.latLng.lng()) + ']';
         });
 
         // Add some markers to the map.
-        map.data.setStyle(function(feature) {
-          return {
-            title: feature.getProperty('name'),
-            optimized: false
-          };
+        map.data.setStyle(function (feature) {
+            return {
+                title: feature.getProperty('name'),
+                optimized: false
+            };
         });
         //map.data.addGeoJson(cities);
         // Retrieve our data and plot it
-        if(anoClicado=='')
-          url = 'https://data.cityofchicago.org/resource/6zsd-86xi?$where=within_circle(location, 41.883811, -87.631749, 1000)';
-        else{
-          ano = anoClicado;
-          url = 'https://data.cityofchicago.org/resource/6zsd-86xi?$where=within_circle(location, 41.883811, -87.631749, 1000)&year='+ano;
+        url = 'https://data.cityofchicago.org/resource/6zsd-86xi?$where=within_circle(location, 41.883811, -87.631749, 20000)';
+        if (anoClicado != '') {
+            url = 'https://data.cityofchicago.org/resource/6zsd-86xi?$where=within_circle(location, 41.883811, -87.631749, 20000)&year=' + anoClicado;
         }
 
-	    $.getJSON(url, function(data, textstatus) {
-	          $.each(data, function(i, entry) {
+        if (crimeClicado != '') {
+            console.log(crimeClicado);
+            url = 'https://data.cityofchicago.org/resource/6zsd-86xi?$where=within_circle(location, 41.883811, -87.631749, 20000)&year=2018&primary_type=' + crimeClicado;
+        }
 
-	          	var houve_prisao = entry.arrest ? 'Sim' : 'Não';
+        $.getJSON(url, function (data, textstatus) {
+            $.each(data, function (i, entry) {
 
-          		var contentString = '<div id="content">'+
-	            '<div id="siteNotice">'+
-	            '</div>'+
-	            '<h1 id="firstHeading" class="firstHeading">'+ entry.location_description +'</h1>'+
-	            '<div id="bodyContent">'+
-	            '<p><b>Endereço:</b> ' + entry.block + '</p>'+
-	            '<p><b>Descrição:</b> '+ entry.description + '</p>'+
-	            '<p><b>Data do evento:</b> '+ entry.date + '</p>'+
-	            '<p><b>Houve prisão:</b> '+ houve_prisao + '</p>'+
-	            '<p><b>Ano:</b> '+ entry.year + '</p>'+
+                var houve_prisao = entry.arrest ? 'Sim' : 'Não';
 
-	            '<p>Coordenadas:</p>'+
-	            '<p><b>Latitude:</b> '+ entry.location.coordinates[1] + '</p>'+
-	            '<p><b>Longitude:</b> '+ entry.location.coordinates[0] + '</p>'+
-	            '</div>'+
-	            '</div>';
+                var contentString = '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    '</div>' +
+                    '<h1 id="firstHeading" class="firstHeading">' + entry.location_description + '</h1>' +
+                    '<div id="bodyContent">' +
+                    '<p><b>Crime primário:</b> ' + entry.primary_type + '</p>' +
+                    '<p><b>Descrição do crime:</b> ' + entry.description + '</p>' +
+                    '<p><b>Bloco:</b> ' + entry.block + '</p>' +
+                    '<p><b>Data do evento:</b> ' + entry.date + '</p>' +
+                    '<p><b>Houve prisão:</b> ' + houve_prisao + '</p>' +
+                    '<p><b>Ano:</b> ' + entry.year + '</p>' +
 
-		      	var infowindow = new google.maps.InfoWindow({
-		         	content: contentString
-		        	});
+                    '<p>Coordenadas:</p>' +
+                    '<p><b>Latitude:</b> ' + entry.location.coordinates[1] + '</p>' +
+                    '<p><b>Longitude:</b> ' + entry.location.coordinates[0] + '</p>' +
+                    '</div>' +
+                    '</div>';
 
-					var marker = new google.maps.Marker({
-						position: new google.maps.LatLng(entry.location.coordinates[1],
-						                                 entry.location.coordinates[0]),
-						map: map,
-						title: location.name
-					});
-					marker.addListener('click', function() {
-						infowindow.open(map, marker);
-					});
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
 
-	          });
-	    });
-      }
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(entry.location.coordinates[1],
+                        entry.location.coordinates[0]),
+                    map: map,
+                    title: location.name
+                });
+                marker.addListener('click', function () {
+                    infowindow.open(map, marker);
+                });
+
+            });
+        });
+    }
 
 
-    </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuLvRcPR9MklYRhDLl2qEgjmlSBt_7_48&callback=initMap"></script>
-  </body>
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuLvRcPR9MklYRhDLl2qEgjmlSBt_7_48&callback=initMap"></script>
+</body>
 </html>
