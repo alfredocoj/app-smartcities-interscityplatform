@@ -169,9 +169,9 @@
         var coordsDiv = document.getElementById('coords');
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(coordsDiv);
         map.addListener('mousemove', function(event) {
-          coordsDiv.textContent =
+          coordsDiv.textContent = '['+
               'lat: ' + Math.round(event.latLng.lat()) + ', ' +
-              'lng: ' + Math.round(event.latLng.lng());
+              'lng: ' + Math.round(event.latLng.lng()) +']';
         });
 
         // Add some markers to the map.
