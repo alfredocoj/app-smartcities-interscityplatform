@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <title>Leaflet Cluster Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css" />
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.Default.css" />
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
           integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
@@ -9,37 +14,22 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
-            integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"
-            defer></script>
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+    <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js'></script>
+    <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js'></script>
+
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <!--<script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>-->
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
             integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"
             defer></script>
 
-    <meta charset="utf-8">
-    <title>InterCrime</title>
-    <style>
-        /* Always set the map height explicitly to define the size of the div
-         * element that contains the map. */
-        #map {
-            height: 100%;
-        }
 
-        /* Optional: Makes the sample page fill the window. */
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        #coords {
-            background-color: black;
-            color: white;
-            padding: 5px;
-        }
-    </style>
 </head>
+
 <body>
+
 <nav class="navbar navbar-fixed-top navbar-inverse bg-inverse p-0">
     <form class="form-inline mx-2">
         <div class="btn-toolbar mr-auto" role="toolbar">
@@ -111,7 +101,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <!--<div class="card">
                     <div class="card-header btn btn-default mh1" data-toggle="collapse" data-target="#MenuCrimes"
                          data-parent="#SideMenu">
                         <i class="fa fa-map fa-fw"></i>&nbsp;Filtro por crimes
@@ -132,7 +122,7 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="card">
                     <div class="card-header btn btn-default mh1" data-toggle="collapse" data-target="#MenuStuff"
                          data-parent="#SideMenu">
@@ -179,132 +169,11 @@
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
 </div><!-- modal -->
-<div id="map"></div>
-<div id="coords"></div>
-<script>
-    // This example defines an image map type using the Gall-Peters
-    // projection.
-    // https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection
 
-    var anoClicado = '';
-    var crimeClicado = '';
-
-    $('#ano1, #ano2, #ano3').click(function () {
-        if (this.id == 'ano1') {
-            anoClicado = '2018';
-        }
-        else if (this.id == 'ano2') {
-            anoClicado = '2017';
-        }
-        else if (this.id == 'ano3') {
-            anoClicado = '2016';
-        }
-        initMap();
-    });
-
-    $('#crime1, #crime2, #crime3').click(function () {
-        if (this.id == 'crime1') {
-            crimeClicado = 'HOMICIDE';
-        }
-        else if (this.id == 'crime2') {
-            crimeClicado = 'THEFT';
-        }
-
-        else if (this.id == 'crime3') {
-            crimeClicado = 'MOTOR VEHICLE THEFT';
-        }
-
-        else if (this.id == 'crime4') {
-            crimeClicado = 'CRIMINAL TRESPASS';
-        }
-
-        initMap();
-    });
-
-    function initMap() {
-        // Create a map. Use the Gall-Peters map type.
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 15,
-            center: {lat: 41.883811, lng: -87.631749},
-            mapTypeControl: false
-        });
-
-        //initGallPeters();
-        //map.mapTypes.set('gallPeters', gallPetersMapType);
-        //map.setMapTypeId('gallPeters');
-
-        // Show the lat and lng under the mouse cursor.
-        var coordsDiv = document.getElementById('coords');
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(coordsDiv);
-        map.addListener('mousemove', function (event) {
-                coordsDiv.textContent = '[' +
-                    'lat: ' + Math.round(event.latLng.lat()) + ', ' +
-                    'lng: ' + Math.round(event.latLng.lng()) + ']';
-        });
-
-        // Add some markers to the map.
-        map.data.setStyle(function (feature) {
-            return {
-                title: feature.getProperty('name'),
-                optimized: false
-            };
-        });
-        //map.data.addGeoJson(cities);
-        // Retrieve our data and plot it
-        url = 'https://data.cityofchicago.org/resource/6zsd-86xi?$where=within_circle(location, 41.883811, -87.631749, 30000)';
-        if (anoClicado != '') {
-            url = 'https://data.cityofchicago.org/resource/6zsd-86xi?$where=within_circle(location, 41.883811, -87.631749, 30000)&year=' + anoClicado;
-        }
-
-        if (crimeClicado != '') {
-            console.log(crimeClicado);
-            url = 'https://data.cityofchicago.org/resource/6zsd-86xi?$where=within_circle(location, 41.883811, -87.631749, 30000)&year=2018&primary_type=' + crimeClicado;
-        }
-
-        $.getJSON(url, function (data, textstatus) {
-            $.each(data, function (i, entry) {
-
-                var houve_prisao = entry.arrest ? 'Sim' : 'Não';
-
-                var contentString = '<div id="content">' +
-                    '<div id="siteNotice">' +
-                    '</div>' +
-                    '<h1 id="firstHeading" class="firstHeading">' + entry.location_description + '</h1>' +
-                    '<div id="bodyContent">' +
-                    '<p><b>Crime primário:</b> ' + entry.primary_type + '</p>' +
-                    '<p><b>Descrição do crime:</b> ' + entry.description + '</p>' +
-                    '<p><b>Bloco:</b> ' + entry.block + '</p>' +
-                    '<p><b>Data do evento:</b> ' + entry.date + '</p>' +
-                    '<p><b>Houve prisão:</b> ' + houve_prisao + '</p>' +
-                    '<p><b>Ano:</b> ' + entry.year + '</p>' +
-
-                    '<p>Coordenadas:</p>' +
-                    '<p><b>Latitude:</b> ' + entry.location.coordinates[1] + '</p>' +
-                    '<p><b>Longitude:</b> ' + entry.location.coordinates[0] + '</p>' +
-                    '</div>' +
-                    '</div>';
-
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString
-                });
-
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(entry.location.coordinates[1],
-                        entry.location.coordinates[0]),
-                    map: map,
-                    title: location.name
-                });
-                marker.addListener('click', function () {
-                    infowindow.open(map, marker);
-                });
-
-            });
-        });
-    }
+<div id="map" style="border: 1px solid #AAA;"></div>
 
 
-</script>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuLvRcPR9MklYRhDLl2qEgjmlSBt_7_48&callback=initMap"></script>
+<script type='text/javascript' src='maps/markers.js'></script>
+<script type='text/javascript' src='maps/app.js'></script>
 </body>
 </html>
