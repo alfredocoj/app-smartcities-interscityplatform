@@ -68,19 +68,19 @@ $('select').on('change', function () {
 dateInicial = undefined;
 dateFinal = undefined;
 
-$('#date-input1').change(function () {
-    if ($('#date-input1').val() !== '') {
-        dateInicial = $('#date-input1').val() + 'T00:01:00.000Z';
-
-        if($('#date-input2').val() === '')
-            initMap(crimeClicado, dateInicial, dateInicial);
-        else
-            initMap(crimeClicado, dateInicial, dateFinal);
-    }
-});
+// $('#date-input1').change(function () {
+//   if ($('#date-input1').val() !== '') {
+//     dateInicial = $('#date-input1').val() + 'T00:01:00.000Z';
+//
+//     if($('#date-input2').val() === '')
+//       initMap(crimeClicado, dateInicial, dateInicial);
+//     else
+//       initMap(crimeClicado, dateInicial, dateFinal);
+//   }
+// });
 
 $('#date-input2').change(function () {
-    if ($('#date-input2').val() !== '') {
+    if ($('#date-input2').val() !== '' && $('#date-input1').val() !== '') {
         dateFinal = $('#date-input2').val() + 'T00:01:00.000Z';
 
         if($('#date-input1').val() === '')
