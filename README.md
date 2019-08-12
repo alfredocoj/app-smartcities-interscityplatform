@@ -1,2 +1,3 @@
 # app-smartcities-interscityplatform
-Aplicação para cidades inteligentes que usa dados de incidência criminal da cidade de Chicago no EUA. A aplicação se comunica com a Plataforma Interscity para carregar os dados.
+
+Smart cities application that uses crime data from the city of Chicago in the USA. The application communicates with the Interscity Platform to load data.
